@@ -1,0 +1,159 @@
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<script type='text/javascript' src='https://code.jquery.com/jquery-1.11.0.js'></script>
+  <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<body>
+  <p-toast></p-toast>
+  <div class="main-content">
+    <!-- Header -->
+    <div [ngClass]="user" class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image:
+    url(assets/images/profile-background.jpg); background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+          <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white">Hello {{ user?.name }}</h1>
+            <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+            <p-button (click)="onSubmit()"> {{updatemode? "Save" : "Edit"}}</p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="card-body pt-0 pt-md-4">
+
+              <div class="text-center">
+                <h3>
+                    {{ user?.name }}<span class="font-weight-light">, 27</span>
+                </h3>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>{{user?.city}}, {{user?.country}}
+                </div>
+
+                <hr class="my-4">
+                <p> {{ user?.name}} — love everything about graphics and about programming. He spends most of his time in developing his skills to better suite the industry. </p>
+                <a href="#">Back to Home</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">My account</h3>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="form">
+                <h6 class="heading-small text-muted mb-4">User information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label"  for="name">Name</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user.name}}</p>
+                        <input *ngIf="updatemode" formControlName="name"  type="text" id="name" class="form-control form-control-alternative" pInputText placeholder="Name">
+                        <small *ngIf="userForm['name'].invalid && (userForm['name'].touched || isSubmitted)" class="p-error">Name is Required </small>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Email address</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user.email}}</p>
+                        <input *ngIf="updatemode" formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" placeholder="Email">
+                        <small *ngIf="userForm['email'].invalid && (userForm['email'].touched || isSubmitted)" class="p-error">
+                          <span *ngIf="userForm['email'].errors?.['required']">Email is required</span>
+                          <span *ngIf="userForm['email'].errors?.['email']">Email is invalid</span>
+                      </small>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+
+                        <label class="form-control-label" for="name">Phone Number</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user.phone}}</p>
+                        <input  *ngIf="updatemode" data-inputmask="'alias': 'date','placeholder': '*'" formControlName="phone" type="text" id="phone" class="form-control form-control-alternative" pInputText placeholder="Name">
+                        <small *ngIf="userForm['phone'].invalid && (userForm['phone'].touched || isSubmitted)" class="p-error">Phone is Required </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4">
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+
+                        <label class="form-control-label" for="input-city">Apartment</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user.apartment}}</p>
+                        <input   *ngIf="updatemode" formControlName="apartment" type="text" id="apartment" class="form-control form-control-alternative" placeholder="Apartment">
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+
+                        <label class="form-control-label" for="input-city">Street</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user?.street !== ' ' ? '...': user?.street}}</p>
+                        <input  *ngIf="updatemode" formControlName="street" type="text" id="street" class="form-control form-control-alternative" placeholder="Street">
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">City</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user?.street === ' ' ? '...': user?.city}}</p>
+                        <input *ngIf="updatemode" formControlName="city" type="text" id="city" class="form-control form-control-alternative" placeholder="City">
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">Country</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user?.street === ' ' ? '...': user?.country}}</p>
+                        <br><p-dropdown
+                        *ngIf="updatemode"
+                        [options]="countries"
+                        formControlName="country"
+                        optionLabel="name"
+                        optionValue="id"
+                        [filter]="true"
+                        filterBy="name"
+                        [showClear]="true"
+                        placeholder="Select a Country"
+                      ></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">Postal code</label>
+                        <p  *ngIf="!updatemode"  style="font-size: 15px; background-color: rgb(244, 244, 244);"class="form-control form-control-alternative">{{user?.street === ' ' ? '...': user?.zip}}</p>
+                        <input *ngIf="updatemode" formControlName="zip" type="number" id="zip" class="form-control form-control-alternative" placeholder="Zip">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-confirmDialog
+    [style]="{ width: '50vw' }"
+    [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"
+  ></p-confirmDialog>
+</body>
+

@@ -1,0 +1,42 @@
+//main styles
+@import './base/colors.scss';
+@import './base/fonts.scss';
+@import './base/mixins.scss';
+@import './base/configuration.scss';
+
+//Design Libraries
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/saga-blue/theme.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~primeflex/primeflex.css';
+@import '~animate.css/animate.css';
+
+//brightly pages
+@import './apps/shop/pages/home-page.scss';
+@import './apps/shop/pages/product-list.scss';
+
+//shared components
+@import './apps/shop/shared/header.scss';
+@import './apps/shop/shared/footer.scss';
+@import './apps/shop/shared/nav.scss';
+
+//libraries
+@import './libs/ui/ui.scss';
+@import './libs/products/products.scss';
+@import './libs/users/users.scss';
+@import './libs/orders/orders.scss';
+
+.container{
+    width: 1200px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: var(--surface-100);
+}
+
+@media (min-width: 768px) {
+    .main-content .container-fluid {
+      padding-right: 39px !important;
+      padding-left: 39px !important;
+    }
+}
+
